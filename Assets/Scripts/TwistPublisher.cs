@@ -32,8 +32,6 @@ public class TwistPublisher : MonoBehaviour
         {
             SendTwistMsg(twist);
             timeElapsed = 0;
-            Debug.Log(twist.linear);
-            // Debug.Log(twist.angular);
         }
         
     }

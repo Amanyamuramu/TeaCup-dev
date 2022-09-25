@@ -6,13 +6,12 @@ using UnityEngine.SceneManagement;
 public class GameInputSetting : MonoBehaviour
 {
     public Ros2Moving ros2Moving;
-    public GameObject fadeobject;
+    public GameObject[] fadeobject = new GameObject[2];
     AudioSource audioSource;
-    
-    // Start is called before the first frame update
+
     void Start()
     {
-        fadeobject.SetActive(true);
+        fadeobject[0].SetActive(true);
         audioSource = this.GetComponent<AudioSource>();
         audioSource.Stop();
         Time.timeScale = 0;
@@ -21,52 +20,38 @@ public class GameInputSetting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if(Input.GetKeyDown(KeyCode.F1)){
-            if(ros2Moving.alphaBool == false){
-            ros2Moving.alphaBool = true;
-            }
-        else{
-            ros2Moving.alphaBool = false;
-            }
+            PatternA();
         }
         if(Input.GetKeyDown(KeyCode.F2)){
-            if(ros2Moving.betaBool == false){
-            ros2Moving.betaBool = true;
-        }
-        else{
-            ros2Moving.betaBool = false;
-            }
+            PatternB();
         }
         if(Input.GetKeyDown(KeyCode.F3)){
-            if(ros2Moving.thetaBool == false){
-            ros2Moving.thetaBool = true;
-            }
-        else{
-            ros2Moving.thetaBool = false;
-            }
+            PatternC();
         }
 
         if(Input.GetKeyDown(KeyCode.F5)){
-            fadeobject.SetActive(false);
-            Time.timeScale = 1;
-            audioSource = this.GetComponent<AudioSource>();
-            audioSource.Play();  
-            Time.timeScale = 1;
+            TimeStart();
         }
         if(Input.GetKeyDown(KeyCode.F6)){
-            audioSource = this.GetComponent<AudioSource>();
-            audioSource.Stop();    
-            fadeobject.SetActive(true);
-            Time.timeScale = 0;
+            TimeStop();
         }
         if(Input.GetKeyDown(KeyCode.F7)){
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Retry();
+        }
+        if(Input.GetKeyDown(KeyCode.F8)){
+            if(fadeobject[1].activeSelf){
+                fadeobject[1].SetActive(false);
+            }
+            else{
+                fadeobject[1].SetActive(true);
+            }
         }
     }
 
     public void TimeStart(){
-        fadeobject.SetActive(false);
+        fadeobject[0].SetActive(false);
+        fadeobject[1].SetActive(false);
         Time.timeScale = 1;
         audioSource = this.GetComponent<AudioSource>();
         audioSource.Play();  
@@ -79,7 +64,7 @@ public class GameInputSetting : MonoBehaviour
     public void TimeStop(){
         audioSource = this.GetComponent<AudioSource>();
         audioSource.Stop();    
-        fadeobject.SetActive(true);
+        fadeobject[0].SetActive(true);
         Time.timeScale = 0;
     }
 
@@ -116,5 +101,4 @@ public class GameInputSetting : MonoBehaviour
         }
         Debug.Log("c patten");
     }
-    
 }
