@@ -13,6 +13,7 @@ public class TwistPublisher : MonoBehaviour
     private ROSConnection ros;
     private float timeElapsed;
     private TwistMsg twist = new TwistMsg();
+    public Ros2Moving ros2Moving;
 
 
     // Start is called before the first frame update
@@ -49,12 +50,34 @@ public class TwistPublisher : MonoBehaviour
         // 移動速度と回転速度をそれぞれROSの座標系に変換
         Vector3<FLU> rosLinear = linearVector.To<FLU>();
         Vector3<FLU> rosAngular = angularVector.To<FLU>();
-        rosAngular.z *= -1f;
-        rosAngular.z = 0f;
-
-        rosLinear.x = rosLinear.y;
-        rosLinear.y = 0f;
         
+        if(ros2Moving.betaBool){
+            rosAngular.x = 0.0f;
+            rosAngular.y = 0.0f;
+            rosAngular.z = 0.0f;
+
+            rosLinear.x = rosLinear.y;
+            rosLinear.y = 0f;
+            rosLinear.z = 0f;
+        }
+        if(ros2Moving.alphaBool){
+            rosAngular.x = 0.0f;
+            rosAngular.y = 0.0f;
+
+            rosLinear.x = 0f;
+            rosLinear.y = 0f;
+            rosLinear.z = 0f;
+        }
+        if(ros2Moving.alphaBool){
+            rosAngular.x = 0.0f;
+            rosAngular.y = 0.0f;
+
+            rosLinear.x = rosLinear.y;
+            rosLinear.y = 0f;
+            rosLinear.z = 0f;
+        }
+
+
         
         
 
